@@ -24,10 +24,13 @@ int add_item(Inventory *inv, Item item) {
 }
 
 int remove_item(Inventory *inv, int index) {
+    // if index less than 0 or more than the actual count which wouldnt make sense, so its an error;
     if (index < 0 || index >= inv->count) {
         printf("Invalid index.\n");
         return 0;
     }
+   //moving everything to the left, so basiaclly replacing the current index, which can be anything. And then removing the previous copy that remained.
+
     for (int i = index; i < inv->count - 1; i++) {
         inv->items[i] = inv->items[i + 1];
     }
