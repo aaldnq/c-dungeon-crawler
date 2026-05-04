@@ -3,8 +3,7 @@
 #include "inventory.h"
 
 int main() {
-    Inventory inv;
-    inv.count = 0;
+    Inventory *inv = inventory_create(2); 
 
     Item sword;
     strcpy(sword.name, "Iron Sword");
@@ -21,16 +20,23 @@ int main() {
     shield.weight = 5.0f;
     shield.value = 25;
 
-    add_item(&inv, sword);
-    add_item(&inv, potion);
-    add_item(&inv, shield);
+    Item dagger;
+    strcpy(dagger.name, "Rusty Dagger");
+    dagger.weight = 1.0f;
+    dagger.value = 10;
 
-    print_inventory(&inv);
+    add_item(inv, sword);
+    add_item(inv, potion);   // inventory full here, should grow
+    add_item(inv, shield);
+    add_item(inv, dagger);   // grows again
 
-    printf("\nRemoving item at index 1...\n\n");
-    remove_item(&inv, 1);
+    print_inventory(inv);
 
-    print_inventory(&inv);
+    printf("\nRemoving index 0...\n\n");
+    remove_item(inv, 0);
 
+    print_inventory(inv);
+
+    inventory_destroy(inv);  // always clean up
     return 0;
 }
